@@ -10,10 +10,12 @@ enum class GameState
 };
 
 void GenerateMysteryNumber(unsigned int& mysteryNumber, int maxNumber);
+void FindMysteryNumber(unsigned int mysteryNumber, int maxNumber, int& counter);
 
 int main()
 {
 	const int maxNumber = 100;
+	int counter = 0;
 	GameState gameState = GameState::INIT;
 
 	unsigned int mysteryNumber = 0;
@@ -22,28 +24,28 @@ int main()
 	{
 		switch (gameState)
 		{
-		case GameState::INIT:
-			GenerateMysteryNumber(mysteryNumber, maxNumber);
-			gameState = GameState::PLAY;
-			break;
+			case GameState::INIT:
+			{
+				GenerateMysteryNumber(mysteryNumber, maxNumber);
+				gameState = GameState::PLAY;
+				break;
+			}
+			case GameState::PLAY:
+			{
+				FindMysteryNumber(mysteryNumber, maxNumber, counter);
+				GameState gameState = GameState::END;
+				break;
+			}	
+			case GameState::END:
 
-		case GameState::PLAY:
-			/*
-				Cette partie doit:
-				- essayer de deviner le nombre mystère à l'aide d'un function
-				- Si le nombre mystre est trouvé il faut passer à l'état END
-			*/
-			break;
+				/*
+					Cette partie doit afficher le nombre de coups qui ont été nécessaire pour trouver le nombre mystère et indiquer quel est ce nombre mystère
+				*/
+				break;
 
-		case GameState::END:
-			/*
-				Cette partie doit afficher le nombre de coups qui ont été nécessaire pour trouver le nombre mystère et indiquer quel est ce nombre mystère
-			*/
-			break;
-
-		case GameState::EXIT:
-			break;
-		}
+			case GameState::EXIT:
+				break;
+			}
 	}
 
 	
@@ -55,4 +57,14 @@ void GenerateMysteryNumber(unsigned int& mysteryNumber, int maxNumber)
 {
 	srand(time(NULL));
 	mysteryNumber = rand() % maxNumber + 1;
+}
+
+void FindMysteryNumber(unsigned int mysteryNumber, int maxNumber, int& counter)
+{
+	int tmp = 0;
+	while (tmp != mysteryNumber)
+	{
+		tmp++;
+		counter++;
+	}
 }
