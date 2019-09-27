@@ -1,28 +1,29 @@
 #include <iostream>
+#include <time.h>
 
-enum class GameState {
+enum class GameState
+{
 	INIT,
 	PLAY,
 	END,
 	EXIT
 };
 
-void GenerateMysteryNumber(int& mystery) {
-	
-}
+void GenerateMysteryNumber(unsigned int& mysteryNumber, int maxNumber);
 
-int main() {
+int main()
+{
+	const int maxNumber = 100;
 	GameState gameState = GameState::INIT;
 
-	unsigned int mysteryNumber;
+	unsigned int mysteryNumber = 0;
 
-	while (gameState != GameState::EXIT);
+	while (gameState != GameState::EXIT)
 	{
-		switch (gameState) {
+		switch (gameState)
+		{
 		case GameState::INIT:
-			/*
-				Cette partie doit donner une valeur à mysterNumber comprise entre 0 et 100
-			*/
+			GenerateMysteryNumber(mysteryNumber, maxNumber);
 			gameState = GameState::PLAY;
 			break;
 
@@ -46,6 +47,12 @@ int main() {
 	}
 
 	
-	system("pose");
-	return EXIT_FAILURE;
+	system("pause");
+	return EXIT_SUCCESS;
+}
+
+void GenerateMysteryNumber(unsigned int& mysteryNumber, int maxNumber)
+{
+	srand(time(NULL));
+	mysteryNumber = rand() % maxNumber + 1;
 }
